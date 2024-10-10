@@ -26,19 +26,48 @@
 #
 # print(result)
 
-#문제 3. 모험가 길드
+# 문제 3. 모험가 길드
+# n = int(input())
+# input_ = list(map(int, input().split()))
+#
+# input_.sort()
+# count = 0
+# m_count = 0
+# g_fear = 0
+#
+# for i in range(n):
+#     m_count += 1
+#     if input_[i] == m_count:
+#         count += 1
+#         m_count = 0
+#
+# print(count)
+
+# 문제 4. 설탕 배달(백준 그리디 유형)
 n = int(input())
-input_ = list(map(int, input().split()))
-
-input_.sort()
 count = 0
-m_count = 0
-g_fear = 0
+div_5 = n // 5
+remain_5 = n % 5
+div_3 = 0
+remain_3 = 0
+result = 0
 
-for i in range(n):
-    m_count += 1
-    if input_[i] == m_count:
-        count += 1
-        m_count = 0
+if remain_5 == 0:
+    result = div_5
+else:
+    while True:
+        div_3 = remain_5 // 3
+        remain_3 = remain_5 % 3
+        if remain_3 == 0:
+            result = div_5 + div_3
+            break
+        else:
+            if div_5 > 0:
+                div_5 -= 1
+                remain_5 += 5
+                n -= 5
+            else:
+                result = -1
+                break
 
-print(count)
+print(result)
