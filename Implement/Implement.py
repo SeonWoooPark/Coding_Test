@@ -72,5 +72,160 @@
 # result_str = "".join(result_list) + str(result_num)
 # print(result_str)
 
+# 문제 5. 프린터 큐
+# from collections import deque
+#
+# input_len = int(input())
+# result_count = []
+#
+# for _ in range(input_len):
+#     n, find_idx = map(int, input().split())
+#     value_print = list(map(int, input().split()))
+#     value_tup = [(value_print[i], i) for i in range(len(value_print))]
+#     value_queue = deque(value_tup)
+#     max_value = max(value_queue)
+#     cur_pop = value_queue.popleft()
+#     count = 0
+#     while True:
+#         if max_value[0] == cur_pop[0] and find_idx == cur_pop[1]:
+#             count += 1
+#             result_count.append(count)
+#             break
+#         elif max_value[0] == cur_pop[0]:
+#             count += 1
+#             max_value = max(value_queue)
+#             cur_pop = value_queue.popleft()
+#         elif max_value != cur_pop[0]:
+#             value_queue.append(cur_pop)
+#             cur_pop = value_queue.popleft()
+#
+# for data in result_count:
+#     print(data)
+
+# 문제 6. 로봇 청소기
+# all_row, all_col = map(int, input().split())
+# row, col, way = map(int, input().split())
+# input_data = []
+# drow = [-1, 0, 1, 0]
+# dcol = [0, 1, 0, -1]
+#
+# for _ in range(all_row):
+#     row_list = list(map(int, input().split()))
+#     input_data.append(row_list)
+#
+# input_data[row][col] = 2
+# count = 1
+# is_checked = False
+# while True:
+#     check_v = 0
+#     if not(is_checked):
+#         for i in range(4):
+#             if all_row > row + drow[i] >= 0 and all_col > col + dcol[i] >= 0:
+#                 if input_data[row+drow[i]][col+dcol[i]] != 0:
+#                     check_v += 1
+#             else:
+#                 check_v += 1
+#
+#     if check_v == 4:
+#         row += drow[(way+6) % 4]
+#         col += dcol[(way+6) % 4]
+#         if not(all_row > row >= 0 and all_col > col >= 0):
+#             break
+#         else:
+#             if input_data[row][col] == 1:
+#                 break
+#
+#     else:
+#         way = (way - 1) % 4
+#         n_row = row+drow[way]
+#         n_col = col+dcol[way]
+#         if all_row > n_row >= 0 and all_col > n_col >= 0:
+#             if input_data[n_row][n_col] == 0:
+#                 row = n_row
+#                 col = n_col
+#                 count += 1
+#                 input_data[row][col] = 2
+#                 is_checked = False
+#         else:
+#             is_checked = True
+#
+# print(count)
+
+# 문제 7. 뱀
+from collections import deque
+
+board_len = int(input())
+board = [[0]*board_len for _ in range(board_len)]
+apple_len = int(input())
+
+for _ in range(apple_len):
+    apple_row, apple_col = map(int, input().split())
+    board[apple_row-1][apple_col - 1] = 1
+
+change_len = int(input())
+change_list = []
+for _ in range(change_len):
+    time, way = input().split()
+    time = int(time)
+    change_list.append(tuple([time, way]))
+
+change_que = deque(change_list)
+
+snake = [[0,0]]
+snake_que1 = deque(snake)
+row = 0
+col = 0
+time = 0
+way = 0
+dcol = [1, 0, -1, 0]
+drow = [0, 1, 0, -1]
+is_exist = False
+
+while True:
+    row += drow[way]
+    col += dcol[way]
+    time += 1
+
+    if 0 <= row < board_len and 0 <= col < board_len:
+        snake_body_len = len(snake_que1)
+        for _ in range(snake_body_len):
+            body = snake_que1.popleft()
+            if body[0] == row and body[1] == col:
+                is_exist = True
+                break
+            else:
+                snake_que1.append(body)
+
+        if is_exist:
+            break
+
+        if board[row][col] == 1:
+            snake_que1.append([row,col])
+            board[row][col] = 0
+
+        else:
+            snake_que1.append([row,col])
+            snake_que1.popleft()
+
+        if len(change_que) > 0:
+            change_time = change_que.popleft()
+            if time == change_time[0]:
+                if change_time[1] == 'L':
+                    way = (way-1) % 4
+                else:
+                    way = (way + 1) % 4
+
+            else:
+                change_que.appendleft(change_time)
+
+    else:
+        break
+
+print(time)
+
+
+
+
+
 
 
