@@ -40,9 +40,18 @@ ___
 
 ___
 
-### 📌 문제 6. 뱀
+### 📌 문제 6. 로봇청소기
 
-<img src="problem6.png">
+
+<img src="problem6-1.png">
+
+<img src="problem6-2.png">
+
+___
+
+### 📌 문제 7. 뱀
+
+<img src="problem7.png">
 
 예제 입력 1: 
 6
@@ -87,4 +96,19 @@ ___
 13 L
 
 출력 3: 13
+___
+
+### 📌 문제 8 . 미세먼지 안녕!
+
+URL = https://www.acmicpc.net/problem/17144
+___
+
+### 📌 문제 9. 치즈 
+
+URL = https://www.acmicpc.net/problem/2636
+___
+
+### 📌 문제 10. 빗물 
+
+URL = https://www.acmicpc.net/problem/14719
 ___

@@ -152,77 +152,215 @@
 # print(count)
 
 # 문제 7. 뱀
+# from collections import deque
+#
+# board_len = int(input())
+# board = [[0]*board_len for _ in range(board_len)]
+# apple_len = int(input())
+#
+# for _ in range(apple_len):
+#     apple_row, apple_col = map(int, input().split())
+#     board[apple_row-1][apple_col - 1] = 1
+#
+# change_len = int(input())
+# change_list = []
+# for _ in range(change_len):
+#     time, way = input().split()
+#     time = int(time)
+#     change_list.append(tuple([time, way]))
+#
+# change_que = deque(change_list)
+#
+# snake = [[0,0]]
+# snake_que1 = deque(snake)
+# row = 0
+# col = 0
+# time = 0
+# way = 0
+# dcol = [1, 0, -1, 0]
+# drow = [0, 1, 0, -1]
+# is_exist = False
+#
+# while True:
+#     row += drow[way]
+#     col += dcol[way]
+#     time += 1
+#
+#     if 0 <= row < board_len and 0 <= col < board_len:
+#         snake_body_len = len(snake_que1)
+#         for _ in range(snake_body_len):
+#             body = snake_que1.popleft()
+#             if body[0] == row and body[1] == col:
+#                 is_exist = True
+#                 break
+#             else:
+#                 snake_que1.append(body)
+#
+#         if is_exist:
+#             break
+#
+#         if board[row][col] == 1:
+#             snake_que1.append([row,col])
+#             board[row][col] = 0
+#
+#         else:
+#             snake_que1.append([row,col])
+#             snake_que1.popleft()
+#
+#         if len(change_que) > 0:
+#             change_time = change_que.popleft()
+#             if time == change_time[0]:
+#                 if change_time[1] == 'L':
+#                     way = (way-1) % 4
+#                 else:
+#                     way = (way + 1) % 4
+#
+#             else:
+#                 change_que.appendleft(change_time)
+#
+#     else:
+#         break
+#
+# print(time)
+
+# 문제 8. 미세먼지 안녕!
+# import copy
+# r, c, t = map(int, input().split())
+# board = []
+# drow = [-1, 0, 1, 0]
+# dcol = [0, 1, 0, -1]
+#
+# for _ in range(r):
+#     board_row = list(map(int, input().split()))
+#     board.append(board_row)
+#
+# cleaner_up_row = -1
+# cleaner_down_row = -1
+# for i in range(r):
+#     if i == 0 or i == 1:
+#         continue
+#     if board[i][0] == -1 and board[i-1][0] != -1:
+#         cleaner_up_row = i
+#     elif board[i][0] == -1 and board[i-1][0] == -1:
+#         cleaner_down_row = i
+#         break
+#
+# for _ in range(t):
+#     board_copy = copy.deepcopy(board)
+#     for row in range(r):
+#         for col in range(c):
+#             dif_around = board_copy[row][col] // 5
+#             if dif_around > 0:
+#                 around_list = []
+#                 for i in range(4):
+#                     n_row = row + drow[i]
+#                     n_col = col + dcol[i]
+#                     if 0 <= n_row < r and 0 <= n_col < c:
+#                         if board[n_row][n_col] != -1:
+#                             around_list.append([n_row, n_col])
+#
+#                 for i in range(len(around_list)):
+#                     board[around_list[i][0]][around_list[i][1]] += dif_around
+#                     board[row][col] -= dif_around
+#
+#     for i in range(cleaner_up_row-1, 0, -1):
+#         board[i][0] = board[i-1][0]
+#
+#     for i in range(c-1):
+#         board[0][i] = board[0][i+1]
+#
+#     for i in range(cleaner_up_row):
+#         board[i][c-1] = board[i+1][c-1]
+#
+#     for i in range(c-1, 1, -1):
+#         board[cleaner_up_row][i] = board[cleaner_up_row][i-1]
+#
+#     board[cleaner_up_row][1] = 0
+#
+#     for i in range(cleaner_down_row+1, r-1):
+#         board[i][0] = board[i+1][0]
+#
+#     for i in range(c-1):
+#         board[r-1][i] = board[r-1][i+1]
+#
+#     for i in range(r-1, cleaner_down_row, -1):
+#         board[i][c-1] = board[i-1][c-1]
+#
+#     for i in range(c-1, 1, -1):
+#         board[cleaner_down_row][i] = board[cleaner_down_row][i-1]
+#
+#     board[cleaner_down_row][1] = 0
+#
+# result = 2
+# for row in range(r):
+#     for col in range(c):
+#         result += board[row][col]
+#
+#
+# print(result)
+
+# 문제 9. 치즈
+# from collections import deque
+#
+# r, c = map(int, input().split())
+# board = []
+# time = 1
+# dr = [-1, 0, 1, 0]
+# dc = [0, 1, 0, -1]
+# sum_c = 0
+#
+# for _ in range(r):
+#     board_row = list(map(int, input().split()))
+#     sum_c += sum(board_row)
+#     board.append(board_row)
+#
+#
+# while True:
+#     visited = [[0] * c for _ in range(r)]
+#     q = deque([(0,0)])
+#     melt = deque([])
+#     while q:
+#         cur_r, cur_c = q.popleft()
+#         for i in range(4):
+#             nr = cur_r + dr[i]
+#             nc = cur_c + dc[i]
+#             if 0 <= nr < r and 0 <= nc < c and not visited[nr][nc]:
+#                 visited[nr][nc] = 1
+#                 if board[nr][nc] == 0:
+#                     q.append((nr, nc))
+#                 elif board[nr][nc] == 1:
+#                     melt.append((nr, nc))
+#     melt_cnt = 0
+#     for cur_r, cur_c in melt:
+#         board[cur_r][cur_c] = 0
+#         melt_cnt += 1
+#
+#     sum_c -= melt_cnt
+#
+#     if sum_c == 0:
+#         print(time, melt_cnt, sep="\n")
+#         break
+#
+#     time += 1
+
+
+# 문제 10. 빗물
 from collections import deque
 
-board_len = int(input())
-board = [[0]*board_len for _ in range(board_len)]
-apple_len = int(input())
+h, w = map(int, input().split())
+board = list(map(int, input().split()))
 
-for _ in range(apple_len):
-    apple_row, apple_col = map(int, input().split())
-    board[apple_row-1][apple_col - 1] = 1
+cnt = 0
+for i in range(1, w-1):
+    left_max = max(board[:i])
+    right_max = max(board[i+1:])
 
-change_len = int(input())
-change_list = []
-for _ in range(change_len):
-    time, way = input().split()
-    time = int(time)
-    change_list.append(tuple([time, way]))
+    compare_min = min(left_max, right_max)
 
-change_que = deque(change_list)
+    if board[i] < compare_min:
+        cnt += compare_min - board[i]
 
-snake = [[0,0]]
-snake_que1 = deque(snake)
-row = 0
-col = 0
-time = 0
-way = 0
-dcol = [1, 0, -1, 0]
-drow = [0, 1, 0, -1]
-is_exist = False
-
-while True:
-    row += drow[way]
-    col += dcol[way]
-    time += 1
-
-    if 0 <= row < board_len and 0 <= col < board_len:
-        snake_body_len = len(snake_que1)
-        for _ in range(snake_body_len):
-            body = snake_que1.popleft()
-            if body[0] == row and body[1] == col:
-                is_exist = True
-                break
-            else:
-                snake_que1.append(body)
-
-        if is_exist:
-            break
-
-        if board[row][col] == 1:
-            snake_que1.append([row,col])
-            board[row][col] = 0
-
-        else:
-            snake_que1.append([row,col])
-            snake_que1.popleft()
-
-        if len(change_que) > 0:
-            change_time = change_que.popleft()
-            if time == change_time[0]:
-                if change_time[1] == 'L':
-                    way = (way-1) % 4
-                else:
-                    way = (way + 1) % 4
-
-            else:
-                change_que.appendleft(change_time)
-
-    else:
-        break
-
-print(time)
-
+print(cnt)
 
 
 
