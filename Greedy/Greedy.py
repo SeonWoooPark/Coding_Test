@@ -169,31 +169,29 @@
 # print(result)
 
 # 문제 10. 보석 도둑(백준 그리디 유형)
-import heapq
-
-n, k = map(int, input().split())
-jewel_list = []
-bag_list = []
-result = 0
-
-for _ in range(n):
-    jewel_tup = list(map(int, input().split()))
-    jewel_list.append(jewel_tup)
-
-for _ in range(k):
-    bag_list.append(int(input()))
-
-bag_list.sort()
-jewel_list.sort()
-heap = []
-
-for bag in bag_list:
-    while jewel_list and jewel_list[0][0] <= bag:
-        heapq.heappush(heap, -jewel_list[0][1])
-        heapq.heappop(jewel_list)
-    if heap:
-        result -= heapq.heappop(heap)
-
-print(result)
-
-
+# import heapq
+#
+# n, k = map(int, input().split())
+# jewel_list = []
+# bag_list = []
+# result = 0
+#
+# for _ in range(n):
+#     jewel_tup = list(map(int, input().split()))
+#     jewel_list.append(jewel_tup)
+#
+# for _ in range(k):
+#     bag_list.append(int(input()))
+#
+# bag_list.sort()
+# jewel_list.sort()
+# heap = []
+#
+# for bag in bag_list:
+#     while jewel_list and jewel_list[0][0] <= bag:
+#         heapq.heappush(heap, -jewel_list[0][1])
+#         heapq.heappop(jewel_list)
+#     if heap:
+#         result -= heapq.heappop(heap)
+#
+# print(result)
