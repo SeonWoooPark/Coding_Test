@@ -1,4 +1,4 @@
-# 음료수 얼려 먹기
+# 문제 1. 음료수 얼려 먹기 (BFS와 DFS 모두 사용 가능)
 #BFS와 visited graph를 사용하여 해결
 # from collections import deque
 #
@@ -69,36 +69,83 @@
 #
 # print(result)
 
-# BFS를 사용한 미로 탈출
-from collections import deque
+# 문제 2. 미로 탈출 (BFS 사용)
+# from collections import deque
+#
+# n, m = map(int, input().split())
+# graph = []
+# for _ in range(n):
+#     graph.append(list(map(int, input())))
+#
+# dx = [-1, 1, 0, 0]
+# dy = [0, 0, -1, 1]
+#
+# def bfs(x, y):
+#     queue = deque()
+#     queue.append((x,y))
+#     while queue:
+#         x, y = queue.popleft()
+#         for i in range(4):
+#             nx = x + dx[i]
+#             ny = y + dy[i]
+#             if 0 <= nx < n and 0 <= ny < m:
+#                 if graph[nx][ny] == 1 and (nx != 0 or ny != 0):
+#                     graph[nx][ny] = graph[x][y] + 1
+#                     queue.append((nx,ny))
+#
+#     return graph[n-1][m-1]
+#
+# print(bfs(0, 0))
+#
+# for i in range(n):
+#     for j in range(m):
+#         print(graph[i][j], end=' ')
+#     print()
 
-n, m = map(int, input().split())
-graph = []
-for _ in range(n):
-    graph.append(list(map(int, input())))
-
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
-
-def bfs(x, y):
-    queue = deque()
-    queue.append((x,y))
-    while queue:
-        x, y = queue.popleft()
-        for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-            if 0 <= nx < n and 0 <= ny < m:
-                if graph[nx][ny] == 1 and (nx != 0 or ny != 0):
-                    graph[nx][ny] = graph[x][y] + 1
-                    queue.append((nx,ny))
-
-    return graph[n-1][m-1]
-
-print(bfs(0, 0))
-
-for i in range(n):
-    for j in range(m):
-        print(graph[i][j], end=' ')
-    print()
+# 문제 3. DFS와 BFS (백준 DFS&BFS 유형)
+# from collections import deque
+# n, m, v = map(int, input().split())
+# graph = [[]]
+# graph_edge = []
+#
+# for _ in range(m):
+#     graph_edge.append(list(map(int, input().split())))
+#
+# for i in range(1, n+1):
+#     connect_list = []
+#     for j in range(m):
+#         if i in graph_edge[j]:
+#             connect_v = graph_edge[j][0] if graph_edge[j][0] != i else graph_edge[j][1]
+#             connect_list.append(connect_v)
+#     connect_list.sort()
+#     graph.append(connect_list)
+#
+# def dfs(graph, v, visited):
+#     visited[v] = True
+#     print(v, end=' ')
+#
+#     for i in graph[v]:
+#         if not visited[i]:
+#             visited[i] = True
+#             dfs(graph, i, visited)
+#
+# def bfs(graph, start, visited):
+#     queue = deque()
+#     queue.append(start)
+#     visited[start] = True
+#     print(start, end=' ')
+#     while queue:
+#         v = queue.popleft()
+#         for i in graph[v]:
+#             if not visited[i]:
+#                 queue.append(i)
+#                 visited[i] = True
+#                 print(i, end=' ')
+#
+#
+# visited_dfs = [False] * (n+1)
+# visited_bfs = [False] * (n+1)
+# dfs(graph, v, visited_dfs)
+# print()
+# bfs(graph, v, visited_bfs)
 

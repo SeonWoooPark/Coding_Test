@@ -11,3 +11,10 @@ ___
 <img src="problem2.png">
 
 ___
+
+### 📌 문제 3. DFS와 BFS
+
+#### URL = https://www.acmicpc.net/problem/1260
+
+___
+
