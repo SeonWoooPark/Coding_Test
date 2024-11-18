@@ -1,6 +1,6 @@
 ## BFS
 
-### 📌 문제 1. 연결 요소의 개수
+### 📌 문제 1. 유기농 배추
 
 #### URL = https://www.acmicpc.net/problem/1012
 

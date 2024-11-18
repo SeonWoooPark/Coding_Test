@@ -126,7 +126,6 @@
 #
 #     for i in graph[v]:
 #         if not visited[i]:
-#             visited[i] = True
 #             dfs(graph, i, visited)
 #
 # def bfs(graph, start, visited):

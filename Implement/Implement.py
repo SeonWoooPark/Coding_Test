@@ -103,53 +103,45 @@
 #     print(data)
 
 # 문제 6. 로봇 청소기
-# all_row, all_col = map(int, input().split())
-# row, col, way = map(int, input().split())
-# input_data = []
-# drow = [-1, 0, 1, 0]
-# dcol = [0, 1, 0, -1]
-#
-# for _ in range(all_row):
-#     row_list = list(map(int, input().split()))
-#     input_data.append(row_list)
-#
-# input_data[row][col] = 2
-# count = 1
-# is_checked = False
-# while True:
-#     check_v = 0
-#     if not(is_checked):
-#         for i in range(4):
-#             if all_row > row + drow[i] >= 0 and all_col > col + dcol[i] >= 0:
-#                 if input_data[row+drow[i]][col+dcol[i]] != 0:
-#                     check_v += 1
-#             else:
-#                 check_v += 1
-#
-#     if check_v == 4:
-#         row += drow[(way+6) % 4]
-#         col += dcol[(way+6) % 4]
-#         if not(all_row > row >= 0 and all_col > col >= 0):
-#             break
-#         else:
-#             if input_data[row][col] == 1:
-#                 break
-#
-#     else:
-#         way = (way - 1) % 4
-#         n_row = row+drow[way]
-#         n_col = col+dcol[way]
-#         if all_row > n_row >= 0 and all_col > n_col >= 0:
-#             if input_data[n_row][n_col] == 0:
-#                 row = n_row
-#                 col = n_col
-#                 count += 1
-#                 input_data[row][col] = 2
-#                 is_checked = False
-#         else:
-#             is_checked = True
-#
-# print(count)
+r, c = map(int, input().split())
+dr = [-1, 0, 1, 0]
+dc = [0, 1, 0, -1]
+board = []
+cur_r, cur_c, way = map(int, input().split())
+
+for _ in range(r):
+    board.append(list(map(int, input().split())))
+
+cnt = 0
+while True:
+    if board[cur_r][cur_c] == 0:
+        cnt += 1
+        board[cur_r][cur_c] = 2
+
+    prev_r = cur_r
+    prev_c = cur_c
+
+    for i in range(1, 5):
+        nway = (way-i) % 4
+        nr = cur_r + dr[nway]
+        nc = cur_c + dc[nway]
+        if 0 <= nr < r and 0 <= nc < c and board[nr][nc] == 0:
+            cur_r = nr
+            cur_c = nc
+            way = nway
+            break
+
+    if prev_r == cur_r and prev_c == cur_c:
+        back_way = (way - 2) % 4
+        nr = cur_r + dr[back_way]
+        nc = cur_c + dc[back_way]
+        if 0 <= nr < r and 0 <= nc < c and board[nr][nc] != 1:
+            cur_r = nr
+            cur_c = nc
+        elif 0 <= nr < r and 0 <= nc < c and board[nr][nc] == 1:
+            break
+
+print(cnt)
 
 # 문제 7. 뱀
 # from collections import deque
@@ -345,25 +337,264 @@
 
 
 # 문제 10. 빗물
-from collections import deque
-
-h, w = map(int, input().split())
-board = list(map(int, input().split()))
-
-cnt = 0
-for i in range(1, w-1):
-    left_max = max(board[:i])
-    right_max = max(board[i+1:])
-
-    compare_min = min(left_max, right_max)
-
-    if board[i] < compare_min:
-        cnt += compare_min - board[i]
-
-print(cnt)
-
-
+# from collections import deque
+#
+# h, w = map(int, input().split())
+# board = list(map(int, input().split()))
+#
+# cnt = 0
+# for i in range(1, w-1):
+#     left_max = max(board[:i])
+#     right_max = max(board[i+1:])
+#
+#     compare_min = min(left_max, right_max)
+#
+#     if board[i] < compare_min:
+#         cnt += compare_min - board[i]
+#
+# print(cnt)
 
 
+# 문제 11. 테트르미노
+# n, m = map(int, input().split())
+# graph = []
+# visited = [[False] * m for _ in range(n)]
+# maximum = 0
+# dr = [-1, 1, 0, 0]
+# dc = [0, 0, -1, 1]
+#
+# for _ in range(n):
+#     graph.append(list(map(int, input().split())))
+#
+#
+# def dfs(r, c, tmp, cnt):
+#     global maximum
+#     if cnt == 4:
+#         maximum = max(maximum, tmp)
+#     else:
+#         for i in range(4):
+#             nr = r + dr[i]
+#             nc = c + dc[i]
+#             if 0 <= nr < n and 0 <= nc < m and not visited[nr][nc]:
+#                 visited[nr][nc] = True
+#                 dfs(nr, nc, tmp + graph[nr][nc], cnt + 1)
+#                 visited[nr][nc] = False
+#
+#     return
+#
+#
+# def fly(r, c, tmp):
+#     global maximum
+#     pos = []
+#     for i in range(4):
+#         nr = r + dr[i]
+#         nc = c + dc[i]
+#         if 0 <= nr < n and 0 <= nc < m:
+#             pos.append(graph[nr][nc])
+#
+#     if len(pos) == 4:
+#         pos.sort(reverse=True)
+#         pos.pop()
+#         maximum = max(maximum, tmp + sum(pos))
+#     elif len(pos) == 3:
+#         maximum = max(maximum, tmp + sum(pos))
+#
+#     return
+#
+# for i in range(n):
+#     for j in range(m):
+#         visited[i][j] = True
+#         dfs(i, j, graph[i][j], 1)
+#         fly(i, j, graph[i][j])
+#         visited[i][j] = False
+#
+# print(maximum)
 
+# 문제 12. 아기 상어
+# from collections import deque
+# import heapq
+#
+# n = int(input())
+# graph = []
+# dr = [-1, 1, 0, 0]
+# dc = [0, 0, -1, 1]
+# eat_que = deque()
+#
+# sz = 2
+# time = 0
+# eat_cnt = 0
+#
+# cur_pos = (-1, -1)
+#
+# for i in range(n):
+#     graph_row = list(map(int, input().split()))
+#     graph.append(graph_row)
+#     for j in range(n):
+#         if 0 < graph_row[j] < sz:
+#             eat_que.append((i, j))
+#         elif graph_row[j] == 9:
+#             cur_pos = (i, j)
+#
+#
+# def bfs(cur_pos, e_r, e_c):
+#     visited = [[0] * n for _ in range(n)]
+#     q = deque()
+#     q.append(cur_pos)
+#
+#     while q:
+#         r, c = q.popleft()
+#         for i in range(4):
+#             nr = r + dr[i]
+#             nc = c + dc[i]
+#             if 0 <= nr < n and 0 <= nc < n and visited[nr][nc] == 0:
+#                 if graph[nr][nc] != 9 and graph[nr][nc] <= sz:
+#                     visited[nr][nc] = visited[r][c] + 1
+#                     q.append((nr, nc))
+#
+#     return visited[e_r][e_c]
+#
+#
+# while True:
+#     distance = []
+#     if eat_que:
+#         while eat_que:
+#             e_r, e_c = eat_que.popleft()
+#             dist = bfs(cur_pos, e_r, e_c)
+#             if dist != 0:
+#                 heapq.heappush(distance, (dist, (e_r, e_c)))
+#
+#         if distance:
+#             dist_data = heapq.heappop(distance)
+#             min_dist = dist_data[0]
+#             graph[cur_pos[0]][cur_pos[1]] = 0
+#             nr, nc = dist_data[1][0], dist_data[1][1]
+#             cur_pos = (nr, nc)
+#             graph[cur_pos[0]][cur_pos[1]] = 9
+#             time += min_dist
+#             eat_cnt += 1
+#             if eat_cnt == sz:
+#                 sz += 1
+#                 eat_cnt = 0
+#                 for i in range(n):
+#                     for j in range(n):
+#                         if graph[i][j] != 9 and 0 < graph[i][j] < sz:
+#                             eat_que.append((i, j))
+#             else:
+#                 for data in distance:
+#                     eat_que.append(data[1])
+#     else:
+#         print(time)
+#         break
 
+# 문제 13. 단어 뒤집기2
+# result = ''
+# s = input()
+# isTag = False
+# buffer_s = ''
+#
+# for c in s:
+#     if isTag:
+#         if c == '>':
+#             isTag = False
+#         result += c
+#     else:
+#         if c == ' ':
+#             bf_list = list(buffer_s)
+#             bf_list.reverse()
+#             result += ''.join((bf_list))
+#             result += ' '
+#             buffer_s = ''
+#         elif c == '<':
+#             bf_list = list(buffer_s)
+#             bf_list.reverse()
+#             result += ''.join((bf_list))
+#             result += '<'
+#             buffer_s = ''
+#             isTag = True
+#         else:
+#             buffer_s += c
+#
+# bf_list = list(buffer_s)
+# bf_list.reverse()
+# result += ''.join((bf_list))
+# print(result)
+
+# 문제 14. 마인크래프트
+# r, c, b = map(int, input().split())
+# graph = []
+# result_h = -1
+# result_t = int(1e9)
+#
+# for _ in range(r):
+#     graph.append(list(map(int, input().split())))
+#
+# for i in range(257):
+#     sum_height = 0
+#     sum_time = 0
+#     for row in range(r):
+#         for col in range(c):
+#             av = i - graph[row][col]
+#             if av > 0:
+#                 sum_time += av
+#             else:
+#                 sum_time += (-av) * 2
+#             sum_height += av
+#
+#     if sum_height > b:
+#         break
+#     else:
+#         if result_t > sum_time:
+#             result_t = sum_time
+#             result_h = i
+#         elif result_t == sum_time and result_h < i:
+#             result_h = i
+#
+# print(result_t, result_h)
+
+# 문제 15. 톱니바퀴
+# board = [[]]
+# rotate = []
+# for _ in range(4):
+#     board.append(list(map(int, input())))
+#
+# n = int(input())
+# for _ in range(n):
+#     rotate.append(tuple(map(int, input().split())))
+#
+# def rotate_t(t, way):
+#     if way == 1:
+#         last = t.pop()
+#         t.insert(0, last)
+#     else:
+#         first = t.pop(0)
+#         t.append(first)
+#
+#
+# for num, way in rotate:
+#     count = 1
+#     pre_num = board[num][6]
+#     for i in range(num-1, 0, -1):
+#         if pre_num != board[i][2]:
+#             pre_num = board[i][6]
+#             rotate_t(board[i], way * ((-1)**count))
+#             count += 1
+#         else:
+#             break
+#
+#     count = 1
+#     pos_num = board[num][2]
+#     for i in range(num+1, 5):
+#         if pos_num != board[i][6]:
+#             pos_num = board[i][2]
+#             rotate_t(board[i], way*((-1)**count))
+#             count += 1
+#         else:
+#             break
+#     rotate_t(board[num], way)
+#
+#
+# result = 0
+# for i in range(1, 5):
+#     result += board[i][0] * (2 ** (i-1))
+#
+# print(result)
